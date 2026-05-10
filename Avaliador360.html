@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discipulado 360° - Plenitude IEC™</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg1: #0b4aa2; --bg2: #062b62; --surface: #f4f9ff; --card: #ffffff;
+      --text: #0f172a; --muted: #475569; --primary: #0b63ce; --primary2: #084aa0;
+      --accent: #38bdf8;
+      --c1: #cc0000; --c2: #d97706; --c3: #005ce6; --c4: #00994d;
+      --c5: #7c3aed; --c6: #db2777; --c7: #0891b2; --c8: #ea580c;
+      --shadow: 0 14px 34px rgba(2,32,71,.18);
+      --shadow2: 0 8px 20px rgba(2,32,71,.12);
+      --radius: 18px; --radius2: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(56,189,248,.35), transparent 55%),
+        radial-gradient(900px 600px at 85% 15%, rgba(255,215,0,.10), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text); line-height: 1.7; padding: 18px;
+    }
+    .shell {
+      max-width: 1200px; margin: 0 auto;
+      background: linear-gradient(180deg, rgba(244,249,255,.97), rgba(244,249,255,.94));
+      border: 1px solid rgba(56,189,248,.35); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden; position: relative;
+    }
+    .shell::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7), var(--c8));
+    }
+    .wrap { padding: 26px; }
+    .header { text-align: center; padding: 6px 0 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(11,99,206,.08); }
+    .main-title { margin: 0; font-family: Arial, sans-serif; font-size: 19px; font-weight: normal; color: #64748b; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.2; }
+    .tagline { margin: 6px 0 0; font-weight: 700; color: var(--primary); font-size: 15px; font-family: Arial, sans-serif; line-height: 1.25; }
+    .sub-title { margin: 0; font-family: Arial, sans-serif; font-size: 35px; line-height: 1.15; color: #063b7a; font-weight: normal; letter-spacing: -0.01em; }
+    .header-desc { margin: 12px auto 0; max-width: 80ch; color: var(--muted); font-size: 15px; font-weight: normal; }
+    .step { display: none; }
+    .step.active { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .card { background: var(--card); border: 1px solid rgba(207,230,255,.95); border-radius: var(--radius2); box-shadow: var(--shadow2); padding: 18px; }
+    .instructions {
+      background: linear-gradient(180deg, rgba(56,189,248,.14), rgba(56,189,248,.08));
+      border: 1px solid rgba(56,189,248,.25); border-left: 6px solid var(--accent);
+      border-radius: var(--radius2); padding: 16px; margin: 14px 0 18px; color: var(--text);
+    }
+    .instructions p, .instructions li { margin: 0 0 10px; font-size: 15px; color: var(--text); text-align: justify; }
+    .instructions ul { margin: 8px 0 0 0; padding-left: 18px; }
+
+    .info-banner {
+      background: linear-gradient(135deg, #0891b2, #0e7490);
+      color: #fff; padding: 14px 18px; border-radius: 12px;
+      margin: 12px 0; font-weight: 600; font-size: 14px;
+      box-shadow: 0 8px 18px rgba(8,145,178,.22); text-align: center;
+    }
+    .info-banner.warning {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      box-shadow: 0 8px 18px rgba(217,119,6,.22);
+    }
+
+    .welcome-hero {
+      background: linear-gradient(135deg, #0b4aa2, #062b62);
+      color: #fff; padding: 40px 30px; border-radius: var(--radius2);
+      text-align: center; margin-bottom: 18px; box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+    }
+    .welcome-hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7), var(--c8));
+    }
+    .welcome-hero .welcome-icon { font-size: 64px; margin-bottom: 12px; display: block; }
+    .welcome-hero h2 { color: #fff; font-family: Arial, sans-serif; font-size: 28px; font-weight: 900; margin: 0 0 12px; line-height: 1.2; }
+    .welcome-hero p { font-size: 16px; margin: 0 auto; opacity: 0.95; max-width: 600px; line-height: 1.6; }
+
+    .welcome-section {
+      background: #fff; border: 1px solid #d5e6fb; border-radius: var(--radius2);
+      padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow2);
+    }
+    .welcome-section h3 {
+      color: #063b7a; font-family: Arial, sans-serif; font-size: 18px;
+      font-weight: 900; margin: 0 0 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .welcome-section p { font-size: 15px; color: #475569; margin: 0 0 10px; line-height: 1.7; }
+    .welcome-section ul { margin: 10px 0 0; padding-left: 0; list-style: none; }
+    .welcome-section li {
+      font-size: 14px; color: #475569; padding: 8px 0 8px 32px;
+      position: relative; line-height: 1.6;
+    }
+    .welcome-section li::before {
+      content: '✓'; position: absolute; left: 0; top: 8px;
+      width: 22px; height: 22px; background: #10b981; color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 13px;
+    }
+
+    .welcome-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
+    @media (max-width: 600px) { .welcome-stats { grid-template-columns: 1fr; } }
+    .stat-box {
+      background: linear-gradient(135deg, #f4f9ff, #e6eefc);
+      border: 2px solid #d5e6fb; border-radius: 12px; padding: 16px; text-align: center;
+    }
+    .stat-box .icon { font-size: 28px; }
+    .stat-box .value { font-size: 22px; font-weight: 900; color: #063b7a; font-family: Arial, sans-serif; margin: 4px 0; }
+    .stat-box .label { font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-family: Arial, sans-serif; }
+
+    .privacy-highlight {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; padding: 20px; border-radius: 14px; margin: 16px 0;
+      box-shadow: 0 10px 24px rgba(16,185,129,.25);
+    }
+    .privacy-highlight h4 { margin: 0 0 8px; font-family: Arial, sans-serif; font-size: 17px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+    .privacy-highlight p { margin: 0; font-size: 14px; opacity: 0.95; line-height: 1.6; }
+
+    .verse-quote {
+      background: linear-gradient(135deg, #f4f9ff, #e6eefc);
+      border-left: 6px solid var(--primary); border-radius: var(--radius2);
+      padding: 20px 24px; margin: 16px 0; position: relative;
+    }
+    .verse-quote::before { content: '"'; position: absolute; top: -10px; left: 12px; font-size: 70px; color: rgba(11,99,206,0.15); font-family: Georgia, serif; font-weight: bold; line-height: 1; }
+    .verse-quote p { margin: 0; font-size: 15px; color: #063b7a; font-style: italic; font-weight: 500; line-height: 1.6; padding-left: 24px; }
+    .verse-quote .ref { display: block; margin-top: 8px; font-size: 13px; color: #64748b; font-weight: 700; font-style: normal; font-family: Arial, sans-serif; }
+
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    @media (max-width: 720px) { .pillars-grid { grid-template-columns: 1fr; } }
+    .pillar-box {
+      background: #fff; border: 2px solid #d5e6fb; border-radius: 14px;
+      padding: 16px; text-align: center; box-shadow: var(--shadow2);
+    }
+    .pillar-box .pillar-icon { font-size: 32px; margin-bottom: 6px; }
+    .pillar-box .pillar-name { font-family: Arial, sans-serif; font-weight: 900; font-size: 15px; color: #063b7a; margin-bottom: 4px; }
+    .pillar-box .pillar-desc { font-size: 12px; color: #64748b; font-weight: 600; }
+
+    .proceed-button-area {
+      text-align: center; margin-top: 24px; padding: 20px;
+      background: #fff; border: 2px dashed #0b63ce; border-radius: 14px;
+    }
+    .proceed-button-area p { margin: 0 0 14px; font-size: 14px; color: #475569; font-weight: 600; }
+    .btn-proceed {
+      background: linear-gradient(45deg, #0b63ce, #084aa0) !important;
+      color: #fff !important; padding: 16px 40px !important; font-size: 17px !important;
+      font-weight: 900 !important; border-radius: 14px !important; border: none !important;
+      cursor: pointer !important; box-shadow: 0 14px 28px rgba(11,99,206,.30) !important;
+      transition: all 0.2s ease !important; font-family: Arial, sans-serif !important;
+      display: inline-flex !important; align-items: center !important; gap: 10px !important;
+    }
+    .btn-proceed:hover { transform: translateY(-2px) !important; box-shadow: 0 18px 34px rgba(11,99,206,.40) !important; filter: saturate(1.1) !important; }
+    .btn-proceed::after { content: '→'; font-size: 22px; font-weight: 900; }
+
+    .anonymity-badge {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; padding: 14px 18px; border-radius: 12px;
+      text-align: center; font-weight: 800; font-family: Arial, sans-serif;
+      margin: 14px 0; box-shadow: 0 8px 18px rgba(16,185,129,.22);
+    }
+    .anonymity-badge strong { font-size: 16px; }
+    .anonymity-badge p { margin: 4px 0 0; font-size: 13px; opacity: .92; font-weight: 600; }
+    .leader-info-box {
+      background: linear-gradient(135deg, #063b7a, #0b63ce);
+      color: #fff; padding: 22px; border-radius: 16px; text-align: center;
+      margin: 14px 0; box-shadow: var(--shadow);
+    }
+    .leader-info-box .label { font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; opacity: .85; font-family: Arial, sans-serif; }
+    .leader-info-box .name { font-size: 26px; font-weight: 900; margin: 6px 0 4px; font-family: Arial, sans-serif; }
+    .leader-info-box .role { font-size: 14px; opacity: .9; }
+    .relations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+    @media (max-width: 720px) { .relations-grid { grid-template-columns: 1fr; } }
+    .relation-option {
+      background: #fff; border: 2.5px solid #d5e6fb; border-radius: 16px;
+      padding: 22px 16px; text-align: center; cursor: pointer;
+      transition: all .2s ease; box-shadow: var(--shadow2);
+    }
+    .relation-option:hover { transform: translateY(-3px); box-shadow: 0 16px 28px rgba(2,32,71,.14); border-color: var(--accent); }
+    .relation-option.selected {
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      color: #fff; border-color: var(--primary2); box-shadow: 0 14px 24px rgba(11,99,206,.30);
+    }
+    .relation-option .icon { font-size: 38px; margin-bottom: 8px; }
+    .relation-option .title { font-size: 18px; font-weight: 900; font-family: Arial, sans-serif; margin-bottom: 4px; }
+    .relation-option .desc { font-size: 13px; opacity: .85; }
+    .code-input-card {
+      background: #fff; border: 1px solid #d5e6fb; border-radius: 16px;
+      padding: 26px; max-width: 480px; margin: 0 auto; text-align: center; box-shadow: var(--shadow2);
+    }
+    .form-group label { display: block; font-weight: 800; color: #063b7a; margin-bottom: 8px; font-size: 15px; font-family: Arial, sans-serif; }
+    .field { position: relative; }
+    .field svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: #64748b; z-index: 2; pointer-events: none; }
+    .field input, .field select {
+      width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid rgba(11,99,206,.28);
+      border-radius: 12px; font-size: 16px; background: #fff; outline: none;
+      transition: box-shadow .2s ease, border-color .2s ease, background .4s ease; font-family: 'Poppins', sans-serif;
+    }
+    .field input:focus, .field select:focus { border-color: rgba(11,99,206,.55); box-shadow: 0 0 0 4px rgba(56,189,248,.22); }
+    .field input.auto-filled { background: #ecfdf5 !important; border-color: #10b981 !important; }
+    .input-error { border-color: #dc2626 !important; background: #fef2f2 !important; }
+    .field-error { color: #dc2626; font-size: 12px; font-weight: 700; font-family: Arial, sans-serif; display: block; margin-top: 4px; }
+    .auto-fill-hint {
+      display: inline-block; margin-top: 8px; padding: 6px 12px;
+      background: #ecfdf5; color: #059669; border-radius: 999px;
+      font-size: 12px; font-weight: 700; font-family: Arial, sans-serif;
+      border: 1px solid #a7f3d0;
+    }
+    .topbar { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; justify-content: space-between; margin: 10px 0 12px; }
+    .counter { font-weight: 800; color: #0b2a52; font-size: 14px; font-family: Arial, sans-serif; }
+    .progress-meta { font-weight: 700; color: var(--muted); font-size: 13px; font-family: Arial, sans-serif; }
+    .progress-bar { width: 100%; background: #e6eefc; border-radius: 999px; overflow: hidden; height: 12px; border: 1px solid rgba(11,99,206,.12); }
+    .progress-fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width .35s ease-in-out; }
+    .question-card { margin-top: 12px; padding: 30px; }
+    .question-competence { text-align: center; font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; font-family: Arial, sans-serif; }
+    .question-pillar-tag { text-align: center; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px; font-family: Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+    .question-title { margin: 0 0 10px; font-size: 22px; font-weight: 700; color: #0f172a; text-align: center; min-height: 72px; display: flex; align-items: center; justify-content: center; line-height: 1.45; }
+    .question-verse { text-align: center; color: #64748b; font-size: 12px; font-style: italic; margin: -4px 0 14px; padding: 0 20px; font-weight: 500; }
+    .question-helper { text-align: center; color: #64748b; font-size: 13px; font-weight: 700; margin-top: -2px; margin-bottom: 18px; font-family: Arial, sans-serif; }
+    .options { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 10px; margin-top: 8px; }
+    .opt { border: 1.5px solid rgba(11,99,206,.22); background: rgba(11,99,206,.06); border-radius: 14px; padding: 12px 14px; cursor: pointer; user-select: none; transition: all .15s ease; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: 700; color: #0b2a52; font-size: 13px; flex: 0 1 calc(20% - 10px); max-width: 190px; min-width: 135px; line-height: 1.25; gap: 4px; }
+    .opt-emoji { font-size: 26px; line-height: 1; margin-bottom: 2px; }
+    .opt-num { font-size: 22px; font-weight: 900; font-family: Arial, sans-serif; line-height: 1; }
+    .opt small { font-size: 12px; color: inherit; font-weight: 800; line-height: 1.25; font-family: Arial, sans-serif; display: block; }
+    .opt-desc { font-size: 10px; opacity: 0.75; font-weight: 600; margin-top: 2px; }
+    @media (max-width: 880px) { .opt { flex: 0 1 calc(50% - 10px); min-width: 145px; } }
+    @media (max-width: 460px) { .opt { flex: 0 1 100%; max-width: 100%; min-width: 0; } }
+    .opt:hover { transform: translateY(-2px); box-shadow: 0 12px 18px rgba(2,32,71,.10); border-color: rgba(56,189,248,.55); }
+    .opt.selected { background: linear-gradient(45deg, var(--primary), var(--primary2)); border-color: rgba(11,99,206,.55); color: #fff; box-shadow: 0 14px 22px rgba(11,99,206,.22); font-weight: 700; font-family: Arial, sans-serif; }
+    .nav { display: flex; gap: 10px; justify-content: space-between; margin-top: 18px; flex-wrap: wrap; }
+    .btn { appearance: none; border: none; cursor: pointer; border-radius: 14px; padding: 12px 16px; font-size: 14px; font-weight: 800; transition: all .2s ease; display: inline-flex; align-items: center; gap: 10px; font-family: Arial, sans-serif; }
+    .btn-primary { background: linear-gradient(45deg, var(--primary), var(--primary2)); color: #fff; box-shadow: 0 10px 18px rgba(11,99,206,.22); }
+    .btn-primary:hover { transform: translateY(-1px); filter: saturate(1.05); box-shadow: 0 14px 26px rgba(11,99,206,.30); }
+    .btn-ghost { background: #fff; color: #0b2a52; border: 1.5px solid rgba(11,99,206,.22); box-shadow: 0 8px 16px rgba(2,32,71,.08); text-decoration: none; }
+    .btn-ghost:hover { transform: translateY(-1px); border-color: rgba(56,189,248,.55); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+    .success-box {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; padding: 32px; border-radius: 18px; text-align: center;
+      margin: 20px 0; box-shadow: 0 18px 32px rgba(16,185,129,.30);
+    }
+    .success-box .icon { font-size: 60px; margin-bottom: 10px; }
+    .success-box h2 { font-size: 26px; font-weight: 900; margin: 0 0 10px; font-family: Arial, sans-serif; }
+    .success-box p { font-size: 15px; margin: 6px 0; opacity: .95; }
+
+    .chart-card {
+      background: #fff; border: 1px solid #d5e6fb; border-radius: 16px;
+      padding: 24px; margin: 18px 0; box-shadow: var(--shadow2);
+    }
+    .chart-card h3 {
+      text-align: center; color: #063b7a; font-family: Arial, sans-serif;
+      font-size: 18px; font-weight: 900; margin: 0 0 6px;
+    }
+    .chart-card .chart-subtitle {
+      text-align: center; color: #64748b; font-size: 13px;
+      margin: 0 0 18px; font-weight: 600;
+    }
+    .chart-container {
+      position: relative; max-width: 520px; margin: 0 auto;
+      height: 420px;
+    }
+    .chart-legend-note {
+      margin-top: 14px; padding: 12px 16px; background: #f4f9ff;
+      border-radius: 10px; font-size: 12px; color: #64748b;
+      text-align: center; font-style: italic; line-height: 1.5;
+    }
+
+    .error-box {
+      background: #fef2f2; border: 2px solid #dc2626; color: #991b1b;
+      padding: 22px; border-radius: 14px; text-align: center; margin: 20px 0;
+    }
+    .error-box .icon { font-size: 40px; margin-bottom: 8px; }
+    .error-box h3 { margin: 0 0 8px; font-family: Arial, sans-serif; font-weight: 900; }
+    .footer { margin-top: 20px; text-align: center; color: var(--muted); font-size: 12px; font-weight: 700; font-family: Arial, sans-serif; }
+    .signature { text-align: center; color: var(--muted); font-size: 12px; font-weight: 700; font-family: Arial, sans-serif; margin-top: 10px; }
+    .status { font-family: Arial, sans-serif; font-weight: bold; min-height: 22px; margin-top: 8px; text-align: center; }
+    .status-success { color: #10b981; } .status-error { color: #ef4444; } .status-pending { color: #f59e0b; }
+    .loading-spinner {
+      display: inline-block; width: 20px; height: 20px;
+      border: 3px solid rgba(11,99,206,.2); border-top-color: var(--primary);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── MELHORIAS MOBILE (smartphones ≤ 480px) ── */
+  @media (max-width: 480px) {
+    body { padding: 8px; }
+    .wrap { padding: 14px; }
+    .question-card { padding: 16px 12px; }
+    .question-title { font-size: 17px; min-height: auto; }
+    .options { gap: 8px; }
+    .opt {
+      flex: 0 1 calc(50% - 4px);
+      max-width: calc(50% - 4px);
+      min-width: 0;
+      min-height: 0;
+      padding: 12px 6px;
+      gap: 3px;
+    }
+    .opt-emoji { font-size: 18px; }
+    .opt-num { font-size: 16px; }
+    .opt small { font-size: 10px; word-break: break-word; overflow-wrap: break-word; }
+    .opt-desc { font-size: 8.5px; word-break: break-word; overflow-wrap: break-word; }
+  }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="wrap">
+
+      <div class="header">
+        <p class="main-title">✝️ Plenitude IEC™</p>
+        <p class="tagline">Onde a Inteligência Emocional encontra a Palavra</p>
+        <h1 class="sub-title">Discipulado 360°</h1>
+        <p class="header-desc">Formar líderes cristãos íntegros exige mais do que diagnóstico — exige <strong>discernimento à luz da Palavra</strong>. Sua percepção, oferecida em amor e verdade, é uma ferramenta de Deus para esculpir o caráter, a competência e a comunhão desta liderança. Responda com sinceridade, oração e edificação. Sua identidade permanece <strong>100% anônima</strong>.</p>
+      </div>
+
+      <!-- ETAPA 0: BOAS-VINDAS -->
+      <section id="step-welcome" class="step active">
+        <div class="welcome-hero">
+          <span class="welcome-icon">✝️</span>
+          <h2>Bem-vindo(a) ao Discipulado 360° — Plenitude IEC™</h2>
+          <p>Você foi convidado(a) a participar de um instrumento único no cenário cristão brasileiro: uma avaliação que mede quem o líder <strong>É</strong>, o que ele <strong>FAZ</strong> e como ele <strong>VIVE</strong> — tudo ancorado bíblicamente. Sua perspectiva é parte essencial dessa formação.</p>
+        </div>
+
+        <div class="verse-quote">
+          <p>"Como o ferro com ferro se afia, assim o homem afia o seu próximo."</p>
+          <span class="ref">— Provérbios 27:17</span>
+        </div>
+
+        <div class="welcome-section">
+          <h3>📖 O que é o Discipulado 360° Plenitude IEC™?</h3>
+          <p>O <strong>Plenitude IEC™</strong> (Inteligência Emocional Cristã) é uma metodologia exclusiva que avalia líderes cristãos a partir de <strong>3 pilares cruciformes</strong>: o caráter (a relação vertical com Deus), a competência (a ação encarnada no ministério) e a comunhão (a relação horizontal com o próximo).</p>
+          <p>Diferente de avaliações genéricas, cada uma das <strong>48 perguntas</strong> está ancorada em um princípio bíblico e mensura uma dimensão real da maturidade ministerial — desde a vida devocional íntima até o impacto no Reino.</p>
+        </div>
+
+        <div class="welcome-section">
+          <h3>✝️ Os 3 Pilares Cruciformes da Liderança Cristã</h3>
+          <p>Como a cruz, esta avaliação se ergue em três dimensões inseparáveis:</p>
+          <div class="pillars-grid">
+            <div class="pillar-box">
+              <div class="pillar-icon">⬆️</div>
+              <div class="pillar-name">CARÁTER</div>
+              <div class="pillar-desc">Quem o líder É diante de Deus<br><em>(Vida Espiritual + IE Cristã)</em></div>
+            </div>
+            <div class="pillar-box">
+              <div class="pillar-icon">🛠️</div>
+              <div class="pillar-name">COMPETÊNCIA</div>
+              <div class="pillar-desc">O que o líder FAZ pelo Reino<br><em>(Pregação + Cuidado + Liderança + Discipulado)</em></div>
+            </div>
+            <div class="pillar-box">
+              <div class="pillar-icon">↔️</div>
+              <div class="pillar-name">COMUNHÃO</div>
+              <div class="pillar-desc">Como o líder VIVE com outros<br><em>(Comunhão + Missão de Reino)</em></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="welcome-section">
+          <h3>🎯 Como funciona o processo?</h3>
+          <ul>
+            <li>Você informará o <strong>código de avaliação</strong> recebido (formato PLN-XXXXX)</li>
+            <li>Identificará seu <strong>vínculo ministerial</strong> com a pessoa avaliada (superior, par ou liderado)</li>
+            <li>Responderá <strong>48 questões</strong> sobre 8 competências do discipulado cristão</li>
+            <li>Avaliará usando a escala de maturidade <strong>🌱 Iniciante → ✨ Exemplar</strong></li>
+            <li>Compartilhará <strong>3 reflexões abertas</strong> (forças, áreas a desenvolver e impacto)</li>
+            <li>Suas respostas serão consolidadas <strong>anonimamente</strong> com as de outros avaliadores</li>
+          </ul>
+        </div>
+
+        <div class="welcome-stats">
+          <div class="stat-box">
+            <div class="icon">⏱️</div>
+            <div class="value">12-18 min</div>
+            <div class="label">Tempo Estimado</div>
+          </div>
+          <div class="stat-box">
+            <div class="icon">📋</div>
+            <div class="value">48 + 3</div>
+            <div class="label">Questões + Reflexões</div>
+          </div>
+          <div class="stat-box">
+            <div class="icon">🔒</div>
+            <div class="value">100%</div>
+            <div class="label">Anônimo</div>
+          </div>
+        </div>
+
+        <div class="privacy-highlight">
+          <h4>🔒 Sua identidade está totalmente protegida</h4>
+          <p>Nenhuma resposta individual será compartilhada com a pessoa avaliada. Todas as respostas são consolidadas e apresentadas de forma agrupada e anônima. Seja honesto(a) — feedback genuíno, em amor e verdade, é o maior presente que você pode oferecer ao Reino.</p>
+        </div>
+
+        <div class="welcome-section" style="background:#fef3c7; border-color:#fcd34d;">
+          <h3 style="color:#78350f;">⚡ Antes de começar, prepare seu coração</h3>
+          <ul>
+            <li>Reserve <strong>12 a 18 minutos</strong> em um ambiente tranquilo, com oração</li>
+            <li>Tenha em mente <strong>situações reais</strong> de convivência ministerial com a liderança</li>
+            <li>Responda com <strong>sinceridade e edificação</strong> — em amor e verdade (Ef 4:15)</li>
+            <li>Lembre-se: você está sendo <strong>instrumento de Deus</strong> na formação dessa liderança</li>
+          </ul>
+        </div>
+
+        <div class="proceed-button-area">
+          <p>✨ Quando seu coração estiver preparado, clique no botão abaixo:</p>
+          <button class="btn-proceed" onclick="showStep('step-validate')">
+            Iniciar Avaliação
+          </button>
+        </div>
+
+        <p class="signature" style="margin-top:18px;">Pr. Roger - amavroger@gmail.com</p>
+        <p class="footer">✨ Plenitude IEC™ | Discipulado 360° — Onde a IE encontra a Palavra</p>
+      </section>
+
+      <!-- ETAPA 1: VALIDAÇÃO DO CÓDIGO -->
+      <section id="step-validate" class="step">
+        <div class="instructions">
+          <p><strong>Excelente! Que o Senhor abençoe esta etapa.</strong></p>
+          <p>Para acessar a avaliação Plenitude IEC™, informe o <strong>código único</strong> que você recebeu (formato: <code>PLN-XXXXX</code>). Esse código identifica a liderança ministerial que você irá avaliar à luz da Palavra.</p>
+        </div>
+
+        <div class="code-input-card">
+          <div class="form-group">
+            <label for="leader-code-input">Código do Líder *</label>
+            <div class="field">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+              <input type="text" id="leader-code-input" placeholder="PLN-XXXXX" style="text-transform:uppercase; letter-spacing:.15em; font-weight:900; text-align:center;" maxlength="9" />
+            </div>
+            <span id="code-error" class="field-error"></span>
+            <span id="auto-fill-indicator" class="auto-fill-hint" style="display:none;">✨ Código preenchido automaticamente pelo link</span>
+          </div>
+
+          <button class="btn btn-primary" onclick="validateLeaderCode()" style="width:100%; justify-content:center; padding:14px; font-size:16px; margin-top:8px;">
+            Validar Código
+          </button>
+
+          <button class="btn btn-ghost" onclick="showStep('step-welcome')" style="width:100%; justify-content:center; padding:12px; font-size:14px; margin-top:10px;">
+            ← Voltar para introdução
+          </button>
+
+          <p style="margin-top:14px; font-size:12px; color:#64748b;">
+            🔒 Sua resposta é protegida e 100% anônima.
+          </p>
+        </div>
+      </section>
+
+      <!-- ETAPA 2: VÍNCULO -->
+      <section id="step-relation" class="step">
+        <div class="leader-info-box">
+          <div class="label">Você está avaliando</div>
+          <div class="name" id="leader-name-display">---</div>
+          <div class="role" id="leader-role-display">---</div>
+        </div>
+
+        <div class="anonymity-badge">
+          <strong>🔒 Avaliação 100% Anônima</strong>
+          <p>Suas respostas serão consolidadas com as de outros avaliadores. A pessoa avaliada nunca saberá o que você respondeu individualmente.</p>
+        </div>
+
+        <div class="card" style="padding: 28px;">
+          <h3 style="margin:0 0 8px; color:#063b7a; font-family:Arial,sans-serif; font-size:20px; font-weight:900; text-align:center;">Qual é a sua relação ministerial com esta pessoa?</h3>
+          <p style="text-align:center; color:#64748b; font-size:14px; margin:0 0 16px;">Selecione a opção que melhor descreve seu vínculo no corpo de Cristo.</p>
+
+          <div class="relations-grid">
+            <div class="relation-option" data-relation="superior" onclick="selectRelation('superior')">
+              <div class="icon">⬆️</div>
+              <div class="title">Supervisor(a)</div>
+              <div class="desc">Esta pessoa se reporta a mim — eu sou líder dela no ministério.</div>
+            </div>
+            <div class="relation-option" data-relation="peer" onclick="selectRelation('peer')">
+              <div class="icon">↔️</div>
+              <div class="title">Par / Irmão(ã)</div>
+              <div class="desc">Caminhamos juntos no mesmo nível ministerial ou em áreas que se relacionam.</div>
+            </div>
+            <div class="relation-option" data-relation="subordinate" onclick="selectRelation('subordinate')">
+              <div class="icon">⬇️</div>
+              <div class="title">Liderado(a)</div>
+              <div class="desc">Esta pessoa é meu(minha) líder ministerial — eu me reporto a ela.</div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:18px;">
+            <label for="time-knowing">Há quanto tempo vocês caminham juntos no ministério? *</label>
+            <div class="field">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <select id="time-knowing">
+                <option value="">Selecione...</option>
+                <option value="Menos de 6 meses">Menos de 6 meses</option>
+                <option value="6 meses a 1 ano">6 meses a 1 ano</option>
+                <option value="1 a 3 anos">1 a 3 anos</option>
+                <option value="3 a 5 anos">3 a 5 anos</option>
+                <option value="Mais de 5 anos">Mais de 5 anos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="nav" style="justify-content:center; margin-top:24px;">
+            <button id="btn-start-eval" class="btn btn-primary" onclick="startEvaluation()" style="width:100%; max-width:380px; justify-content:center; padding:14px; font-size:16px;" disabled>
+              Iniciar Avaliação
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 3: AVALIAÇÃO -->
+      <section id="step-quiz" class="step">
+        <div class="topbar">
+          <div class="counter">Pergunta <span id="q-current">1</span> de 48</div>
+          <div class="progress-meta"><span id="answered-count">0</span>/48 respondidas</div>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <div class="card question-card">
+          <p id="question-pillar" class="question-pillar-tag"></p>
+          <p id="question-competence" class="question-competence"></p>
+          <p id="question-text" class="question-title"></p>
+          <p id="question-verse" class="question-verse"></p>
+          <p class="question-helper">Avalie o nível de maturidade que esta pessoa demonstra nessa dimensão.</p>
+          <div id="options" class="options"></div>
+          <div class="nav">
+            <button id="btn-prev" class="btn btn-ghost" type="button" onclick="goPrev()">Anterior</button>
+            <button id="btn-next" class="btn btn-primary" type="button" onclick="goNext()">Próxima</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 4: COMENTÁRIOS -->
+      <section id="step-comments" class="step">
+        <div class="instructions">
+          <p><strong>🙏 Reflexão final em oração.</strong></p>
+          <p>Para enriquecer o relatório desta liderança à luz do Plenitude IEC™, responda 3 perguntas abertas. Suas palavras serão apresentadas de forma <strong>anônima e agrupada</strong> com os demais avaliadores — em amor e verdade (Ef 4:15).</p>
+        </div>
+
+        <div class="card" style="padding: 28px;">
+          <div class="form-group" style="margin-bottom:20px;">
+            <label for="q-strengths">💎 Quais são as 3 maiores forças desta pessoa como líder cristão? *</label>
+            <p style="font-size:12px; color:#64748b; margin:0 0 8px;">Pense em caráter, dons, frutos do Espírito e marcas visíveis de Cristo na vida dela.</p>
+            <textarea id="q-strengths" rows="4" placeholder="Ex.: Demonstra profunda dependência de Deus em decisões importantes; tem sensibilidade pastoral excepcional com pessoas em sofrimento; ensina a Palavra com fidelidade e clareza..." style="width:100%; padding:14px; border:1.5px solid rgba(11,99,206,.28); border-radius:12px; font-size:15px; font-family:'Poppins',sans-serif; resize:vertical;"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom:20px;">
+            <label for="q-improvements">🌱 Quais áreas você sugere que ela mais precise desenvolver? *</label>
+            <p style="font-size:12px; color:#64748b; margin:0 0 8px;">Sugestões construtivas, em amor — feridas de amigo são fiéis (Pv 27:6).</p>
+            <textarea id="q-improvements" rows="4" placeholder="Ex.: Poderia desenvolver mais a escuta ativa antes de aconselhar; precisa cultivar maior sensibilidade emocional sob pressão; oportunidade de delegar mais e centralizar menos..." style="width:100%; padding:14px; border:1.5px solid rgba(11,99,206,.28); border-radius:12px; font-size:15px; font-family:'Poppins',sans-serif; resize:vertical;"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom:20px;">
+            <label for="q-impact">✨ Que impacto positivo esta pessoa gera para o Reino ao seu redor? *</label>
+            <p style="font-size:12px; color:#64748b; margin:0 0 8px;">Descreva como a presença e ministério dessa pessoa transforma vidas e ambientes.</p>
+            <textarea id="q-impact" rows="4" placeholder="Ex.: Pessoas se sentem vistas e amadas em sua presença; sua pregação tem levado conversões e restaurações; cria ambiente de unidade e fé na equipe..." style="width:100%; padding:14px; border:1.5px solid rgba(11,99,206,.28); border-radius:12px; font-size:15px; font-family:'Poppins',sans-serif; resize:vertical;"></textarea>
+          </div>
+
+          <div class="anonymity-badge" style="margin-top:14px;">
+            <strong>🔒 Lembrete: Você está protegido(a) pelo anonimato.</strong>
+            <p>Seja honesto(a). Feedback genuíno em amor é o maior presente que você pode oferecer a esta liderança e ao Reino.</p>
+          </div>
+
+          <div class="nav">
+            <button class="btn btn-ghost" type="button" onclick="showStep('step-quiz')">Voltar</button>
+            <button id="btn-submit" class="btn btn-primary" type="button" onclick="enviarAvaliacao()">Enviar Avaliação</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 5: SUCESSO -->
+      <section id="step-success" class="step">
+        <div class="success-box">
+          <div class="icon">✅</div>
+          <h2>Avaliação Enviada com Sucesso!</h2>
+          <p>Que Deus o(a) recompense por dedicar seu tempo a este processo de discipulado.</p>
+          <p>Sua resposta foi registrada de forma anônima e contribuirá para um relatório poderoso à luz da Palavra.</p>
+        </div>
+
+        <div class="chart-card">
+          <h3>📊 Seu Espelho de Percepção — Plenitude IEC™</h3>
+          <p class="chart-subtitle">Como você percebeu esta liderança nos 3 pilares e 8 competências</p>
+          <div class="chart-container">
+            <canvas id="radar-chart"></canvas>
+          </div>
+          <p class="chart-legend-note">
+            ✨ Este gráfico mostra <strong>apenas a sua percepção individual</strong> nas 8 competências (escala 🌱1 → ✨5). O relatório consolidado da liderança combinará respostas de todos os avaliadores e será entregue de forma anônima.
+          </p>
+        </div>
+
+        <div class="verse-quote">
+          <p>"Antes, seguindo a verdade em amor, cresçamos em tudo naquele que é a cabeça, Cristo."</p>
+          <span class="ref">— Efésios 4:15</span>
+        </div>
+
+        <div class="card" style="text-align:center; padding:24px;">
+          <h3 style="color:#063b7a; font-family:Arial,sans-serif; font-size:18px; font-weight:900; margin:0 0 10px;">🌟 O Poder do Discipulado 360° Plenitude IEC™</h3>
+          <p style="color:#475569; font-size:14px; margin:0 0 8px;">
+            Você acabou de contribuir para uma das ferramentas de desenvolvimento ministerial mais poderosas do cenário cristão brasileiro. Quando uma liderança recebe feedback honesto e bíblicamente ancorado de múltiplas perspectivas, ela ganha <strong>clareza, evolui mais rápido e impacta o Reino com profundidade</strong>.
+          </p>
+          <p style="color:#475569; font-size:14px; margin:8px 0 0; font-style:italic;">
+            "Aquele que começou a boa obra em vós há de completá-la até o Dia de Cristo Jesus." — Filipenses 1:6
+          </p>
+        </div>
+
+        <p class="signature">Pr. Roger - amavroger@gmail.com</p>
+        <p class="footer">✨ Plenitude IEC™ | Discipulado 360° — Onde a IE encontra a Palavra</p>
+      </section>
+
+      <!-- ETAPA ERRO -->
+      <section id="step-error" class="step">
+        <div class="error-box">
+          <div class="icon">⚠️</div>
+          <h3 id="error-title">Erro</h3>
+          <p id="error-message">Ocorreu um erro inesperado.</p>
+          <button class="btn btn-ghost" onclick="showStep('step-validate')" style="margin-top:14px;">Tentar Novamente</button>
+        </div>
+      </section>
+
+      <!-- ETAPA AVALIAÇÃO ENCERRADA -->
+      <section id="step-closed" class="step">
+        <div class="error-box" style="background:#f1f5f9; border-color:#94a3b8; color:#334155;">
+          <div class="icon">🔒</div>
+          <h3>Avaliação Encerrada</h3>
+          <p id="closed-message">Esta avaliação já foi encerrada e não aceita mais respostas.</p>
+          <p style="font-size:13px; margin-top:12px; color:#64748b;">Se você acredita que isso é um erro, entre em contato com a pessoa que enviou o convite.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// ⚙️ CONFIGURAÇÕES
+// ════════════════════════════════════════════════════════════════
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby9UZmQcl9kFDmnmAlY9bnTD4dEv8h4LCi99F8Jz42YiDZm12Xjk_07ajrwJwnCW74KhQ/exec";
+const API_KEY = "2026Plenitude360$";
+const MIN_EVALUATORS = 3;
+const MAX_EVALUATORS = 30;
+
+// ════════════════════════════════════════════════════════════════
+// 🏛️ COMPETÊNCIAS PLENITUDE IEC™
+// ════════════════════════════════════════════════════════════════
+const competencies = [
+  { id: 'C1', name: '🙏 Vida Espiritual',                 pillar: 'CARÁTER',     color: '#cc0000' },
+  { id: 'C2', name: '💚 Inteligência Emocional Cristã',   pillar: 'CARÁTER',     color: '#d97706' },
+  { id: 'C3', name: '📖 Pregação e Ensino',               pillar: 'COMPETÊNCIA', color: '#005ce6' },
+  { id: 'C4', name: '🤲 Cuidado e Acolhimento',           pillar: 'COMPETÊNCIA', color: '#00994d' },
+  { id: 'C5', name: '👑 Liderança Servidora',             pillar: 'COMPETÊNCIA', color: '#7c3aed' },
+  { id: 'C6', name: '🌱 Discipulado e Multiplicação',     pillar: 'COMPETÊNCIA', color: '#db2777' },
+  { id: 'C7', name: '🤝 Comunhão e Trabalho em Equipe',   pillar: 'COMUNHÃO',    color: '#0891b2' },
+  { id: 'C8', name: '🌍 Missão e Visão de Reino',         pillar: 'COMUNHÃO',    color: '#ea580c' }
+];
+
+// ════════════════════════════════════════════════════════════════
+// 📋 48 PERGUNTAS PLENITUDE IEC™
+// ════════════════════════════════════════════════════════════════
+const questions = [
+  // C1 — VIDA ESPIRITUAL
+  { c: 'C1', t: 'Mantém uma vida devocional pessoal consistente (oração, leitura bíblica, adoração) como prioridade na sua rotina.', v: 'Sl 5:3 — "De madrugada, Senhor, ouvirás a minha voz."' },
+  { c: 'C1', t: 'Demonstra que sua vida e decisões são governadas pela Palavra, citando-a, aplicando-a e submetendo-se a ela com naturalidade.', v: 'Sl 119:105 — "Lâmpada para os meus pés é a tua palavra."' },
+  { c: 'C1', t: 'Recorre à oração antes de decisões, conflitos e ministérios, demonstrando dependência prática de Deus em vez de confiar nas próprias forças.', v: '1 Ts 5:17 — "Orai sem cessar."' },
+  { c: 'C1', t: 'Demonstra sensibilidade à direção do Espírito Santo no ministério e no dia a dia, ajustando seus planos quando percebe a voz de Deus.', v: 'Zc 4:6 — "Não por força, nem por violência, mas pelo meu Espírito."' },
+  { c: 'C1', t: 'Participa ativamente da vida da igreja local (cultos, ceia, comunhão, ministério) com alegria e compromisso, não por obrigação.', v: 'Hb 10:25 — "Não deixemos de congregar-nos."' },
+  { c: 'C1', t: 'Demonstra coerência entre o que ensina/prega e como vive, sendo a mesma pessoa em público, em casa e quando ninguém está vendo.', v: 'Tg 1:22 — "Sede cumpridores da palavra e não somente ouvintes."' },
+
+  // C2 — INTELIGÊNCIA EMOCIONAL CRISTÃ
+  { c: 'C2', t: 'Demonstra autoconsciência emocional, reconhecendo seus próprios sentimentos e gatilhos antes de reagir a situações.', v: 'Sl 139:23 — "Sonda-me, ó Deus, e conhece o meu coração."' },
+  { c: 'C2', t: 'Mantém autodomínio emocional sob pressão ministerial, sem explosões, retraimentos ou reações impulsivas.', v: 'Pv 16:32 — "Melhor é o longânimo do que o herói da guerra."' },
+  { c: 'C2', t: 'Demonstra empatia genuína, entrando na dor e na alegria do outro com sensibilidade pastoral, sem julgamentos precipitados.', v: 'Rm 12:15 — "Alegrai-vos com os que se alegram e chorai com os que choram."' },
+  { c: 'C2', t: 'Lida com conflitos buscando reconciliação ativa, conversa direta e restauração, em vez de fugir, atacar ou silenciar.', v: 'Mt 18:15 — "Vai e repreende-o entre ti e ele só."' },
+  { c: 'C2', t: 'Recebe críticas e correções com humildade, sem se defender de imediato, considerando-as como instrumentos do Senhor para crescimento.', v: 'Pv 27:6 — "Fiéis são as feridas feitas pelo amigo."' },
+  { c: 'C2', t: 'Demonstra resiliência espiritual em meio a frustrações, perdas ou esperas longas, ancorando-se na bondade e soberania de Deus.', v: 'Rm 5:3-4 — "A tribulação produz perseverança."' },
+
+  // C3 — PREGAÇÃO E ENSINO
+  { c: 'C3', t: 'Prega e ensina mantendo fidelidade ao texto bíblico, sem distorcer, descontextualizar ou usar a Palavra para sustentar opiniões pessoais.', v: '2 Tm 2:15 — "Maneja bem a palavra da verdade."' },
+  { c: 'C3', t: 'Comunica a Palavra de forma clara e organizada, tornando verdades profundas compreensíveis para diferentes idades e níveis de maturidade.', v: 'Ne 8:8 — "Liam no livro... interpretavam, dando o sentido."' },
+  { c: 'C3', t: 'Conduz os ouvintes da explicação do texto à aplicação prática na vida cotidiana (família, trabalho, relacionamentos, decisões).', v: 'Tg 1:22 — "Sede cumpridores da palavra e não somente ouvintes."' },
+  { c: 'C3', t: 'Demonstra dependência do Espírito Santo na pregação, evidenciando que sua confiança não está apenas em técnica, eloquência ou preparo intelectual.', v: '1 Co 2:4 — "Em demonstração do Espírito e de poder."' },
+  { c: 'C3', t: 'Dedica tempo consistente ao estudo bíblico, oração e preparação antes de pregar ou ensinar, evitando improvisações superficiais.', v: 'Ed 7:10 — "Esdras dispôs o coração para buscar a Lei do Senhor."' },
+  { c: 'C3', t: 'Ensina percebendo o nível, as dores e o contexto do ouvinte, ajustando linguagem e exemplos para gerar conexão e transformação real.', v: '1 Co 9:22 — "Fiz-me tudo para com todos, para salvar alguns."' },
+
+  // C4 — CUIDADO E ACOLHIMENTO
+  { c: 'C4', t: 'Conhece pelo nome, história e necessidades as pessoas que pastoreia, demonstrando que cada uma é vista, lembrada e valorizada.', v: 'Pv 27:23 — "Conhece bem o estado das tuas ovelhas."' },
+  { c: 'C4', t: 'Escuta com presença e paciência, sem pressa de responder, dar conselhos ou citar versículos antes de compreender a situação completa.', v: 'Tg 1:19 — "Pronto para ouvir, tardio para falar."' },
+  { c: 'C4', t: 'Está acessível e disponível para as pessoas em momentos importantes (celebrações, dificuldades, decisões), dentro de limites saudáveis.', v: 'Gl 6:2 — "Levai as cargas uns dos outros."' },
+  { c: 'C4', t: 'Acompanha pessoas em momentos de crise (luto, doença, separação, depressão), oferecendo presença, oração e cuidado contínuo, não apenas pontual.', v: '2 Co 1:3-4 — "Deus que nos consola em toda a nossa tribulação."' },
+  { c: 'C4', t: 'Acolhe novos visitantes, recém-convertidos e pessoas marcadas por feridas espirituais sem julgamento, criando ambiente seguro para crescerem.', v: 'Rm 15:7 — "Recebei-vos uns aos outros, como também Cristo nos recebeu."' },
+  { c: 'C4', t: 'Preserva confidências recebidas no cuidado pastoral, demonstrando integridade ética e construindo confiança junto às pessoas.', v: 'Pv 11:13 — "O fiel de espírito encobre o segredo."' },
+
+  // C5 — LIDERANÇA SERVIDORA
+  { c: 'C5', t: 'Lidera com postura de servo, envolvendo-se em tarefas comuns e tratando todos com dignidade, sem usar a posição como privilégio ou status.', v: 'Mt 20:26-27 — "Quem quiser tornar-se grande entre vós, será esse o que vos sirva."' },
+  { c: 'C5', t: 'Comunica visão, prioridades e direção com clareza, ajudando a equipe a entender para onde estão indo e por quê.', v: 'Pv 29:18 — "Não havendo profecia, o povo se corrompe."' },
+  { c: 'C5', t: 'Delega responsabilidades de forma clara, confia na equipe e evita centralizar tarefas que outros poderiam executar com excelência.', v: 'Êx 18:21 — "Procura, dentre o povo, homens capazes."' },
+  { c: 'C5', t: 'Toma decisões com sabedoria, oração e conselho, assumindo responsabilidade pelos resultados sem culpar circunstâncias ou terceiros.', v: 'Tg 1:5 — "Se algum tem falta de sabedoria, peça-a a Deus."' },
+  { c: 'C5', t: 'Investe tempo e atenção em formar novos líderes, oferecendo mentoria, oportunidades reais de protagonismo e feedback construtivo.', v: '2 Tm 2:2 — "Transmite a homens fiéis e idôneos para instruir a outros."' },
+  { c: 'C5', t: 'Demonstra submissão saudável às autoridades espirituais e estruturas da igreja, sem rebeldia oculta, murmuração ou independência ministerial.', v: 'Hb 13:17 — "Obedecei aos vossos guias e sede submissos."' },
+
+  // C6 — DISCIPULADO E MULTIPLICAÇÃO
+  { c: 'C6', t: 'Investe tempo intencional no discipulado de pessoas específicas (não apenas em pregação geral), com encontros, acompanhamento e oração regulares.', v: 'Mt 5:1-2 — "Chegando-se a ele os discípulos, abriu a boca e os ensinava."' },
+  { c: 'C6', t: 'Permite que discípulos acompanhem sua vida real (família, decisões, lutas, vitórias), ensinando mais pelo exemplo do que apenas por palavras.', v: '1 Co 11:1 — "Sede meus imitadores, como também eu sou de Cristo."' },
+  { c: 'C6', t: 'Equipa discípulos com Palavra, ferramentas e práticas espirituais (oração, leitura, evangelismo, serviço), formando crentes maduros e autônomos em Cristo.', v: '2 Tm 3:16-17 — "Toda Escritura é útil para o ensino, repreensão, correção..."' },
+  { c: 'C6', t: 'Forma discípulos que também discipulam outros, gerando multiplicação real de gerações espirituais (filhos, netos e bisnetos na fé).', v: '2 Tm 2:2 — "Transmite a homens fiéis... idôneos para instruir a outros."' },
+  { c: 'C6', t: 'Conduz discípulos a uma visão de Reino que ultrapassa os muros da igreja local, formando crentes que evangelizam, servem e impactam a sociedade.', v: 'Mc 16:15 — "Ide por todo o mundo e pregai o evangelho."' },
+  { c: 'C6', t: 'Mantém relacionamento contínuo e de longo prazo com discípulos, acompanhando seu crescimento ao longo do tempo, e não apenas em fases iniciais.', v: 'Mt 28:20 — "Eis que estou convosco todos os dias."' },
+
+  // C7 — COMUNHÃO E TRABALHO EM EQUIPE
+  { c: 'C7', t: 'Cultiva relacionamentos saudáveis e duradouros com colegas de ministério, demonstrando confiança, transparência e cuidado mútuo.', v: 'Pv 18:24 — "Há amigo mais chegado do que um irmão."' },
+  { c: 'C7', t: 'Trabalha em equipe com naturalidade, integrando ideias dos outros, dividindo o crédito e celebrando vitórias coletivas em vez de individuais.', v: 'Ec 4:9-10 — "Melhor é serem dois do que um."' },
+  { c: 'C7', t: 'Convive com pessoas de personalidades, gerações, estilos e opiniões diferentes, valorizando a diversidade como riqueza do corpo de Cristo.', v: '1 Co 12:12 — "O corpo é um e tem muitos membros."' },
+  { c: 'C7', t: 'Reconhece e valoriza publicamente as contribuições dos outros, sem competir, ofuscar ou centralizar méritos em si mesmo.', v: 'Fp 2:3 — "Considerando cada um os outros superiores a si mesmo."' },
+  { c: 'C7', t: 'Demonstra lealdade aos colegas e à liderança, defendendo-os na ausência, evitando fofoca e protegendo a reputação dos irmãos.', v: 'Pv 17:17 — "Em todo tempo ama o amigo."' },
+  { c: 'C7', t: 'Cultiva comunhão genuína (koinonia) com irmãos além do ambiente formal de igreja — partilhando refeições, lares, alegrias e dores da vida cotidiana.', v: 'At 2:42 — "Perseveravam na doutrina dos apóstolos e na comunhão."' },
+
+  // C8 — MISSÃO E VISÃO DE REINO
+  { c: 'C8', t: 'Demonstra paixão e oração genuína por pessoas não convertidas, evidenciando que evangelismo é prioridade do coração e não obrigação ministerial.', v: 'Pv 11:30 — "Quem ganha almas é sábio."' },
+  { c: 'C8', t: 'Compartilha o evangelho de forma natural com pessoas do convívio diário (família, vizinhos, trabalho), com mansidão, sabedoria e oportunidade.', v: '1 Pe 3:15 — "Estai sempre preparados para responder."' },
+  { c: 'C8', t: 'Mobiliza a igreja para impactar a comunidade local com ações práticas (escola, projeto social, acolhimento, presença pública), tornando o evangelho visível.', v: 'Mt 5:13-14 — "Vós sois o sal da terra... a luz do mundo."' },
+  { c: 'C8', t: 'Demonstra compaixão prática com pobres, doentes, presos, crianças vulneráveis e excluídos, envolvendo-se pessoalmente em ações de misericórdia.', v: 'Tg 1:27 — "Visitar os órfãos e as viúvas nas suas tribulações."' },
+  { c: 'C8', t: 'Cultiva visão e envolvimento com missões transculturais (oração, ofertas, envio, mobilização), entendendo a igreja local como base da missão global.', v: 'Mt 24:14 — "Será pregado este evangelho... a todas as nações."' },
+  { c: 'C8', t: 'Vive e ensina que o senhorio de Cristo alcança todas as áreas (família, trabalho, política, cultura, ciência), formando crentes que são luz onde estão.', v: 'Mt 6:10 — "Venha o teu reino, faça-se a tua vontade."' }
+];
+
+const TOTAL_Q = questions.length;
+const responses = new Array(TOTAL_Q).fill(null);
+let current = 0;
+let leaderCode = null;
+let leaderData = null;
+let selectedRelation = null;
+
+const scaleOptions = [
+  { num: 1, label: 'Iniciante',     emoji: '🌱', desc: 'Quase nunca' },
+  { num: 2, label: 'Em Desenvolv.', emoji: '🌿', desc: 'Raramente' },
+  { num: 3, label: 'Consistente',   emoji: '🌳', desc: 'Às vezes' },
+  { num: 4, label: 'Maduro',        emoji: '🌲', desc: 'Frequentemente' },
+  { num: 5, label: 'Exemplar',      emoji: '✨', desc: 'Sempre' }
+];
+
+// ════════════════════════════════════════════════════════════════
+// 🚀 INICIALIZAÇÃO
+// ════════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  autoPreencherCodigoDaURL();
+  document.getElementById('time-knowing').addEventListener('change', updateStartButton);
+});
+
+function autoPreencherCodigoDaURL() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeFromUrl = urlParams.get('codigo') || urlParams.get('code') || urlParams.get('c');
+    if (!codeFromUrl) return;
+
+    const codigoLimpo = String(codeFromUrl).trim().toUpperCase();
+    if (!/^PLN-[A-Z0-9]{5}$/.test(codigoLimpo)) {
+      console.warn('⚠️ Código com formato inválido na URL:', codigoLimpo);
+      return;
+    }
+
+    const input = document.getElementById('leader-code-input');
+    if (!input) return;
+
+    input.value = codigoLimpo;
+    input.classList.add('auto-filled');
+
+    const hint = document.getElementById('auto-fill-indicator');
+    if (hint) hint.style.display = 'inline-block';
+
+    if (window.history && window.history.replaceState) {
+      const novaURL = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, novaURL);
+    }
+
+    console.log('✅ Código auto-preenchido pela URL:', codigoLimpo);
+  } catch (err) {
+    console.error('❌ Erro ao auto-preencher código:', err);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// 🔍 VALIDAR CÓDIGO DO LÍDER
+// ════════════════════════════════════════════════════════════════
+async function validateLeaderCode() {
+  const codeInput = document.getElementById('leader-code-input');
+  const code = codeInput.value.trim().toUpperCase();
+  const errorEl = document.getElementById('code-error');
+  errorEl.textContent = '';
+
+  if (!code || !/^PLN-[A-Z0-9]{5}$/.test(code)) {
+    errorEl.textContent = 'Formato inválido. Use o padrão PLN-XXXXX.';
+    codeInput.classList.add('input-error');
+    return;
+  }
+
+  codeInput.classList.remove('input-error');
+  codeInput.disabled = true;
+  const btn = document.querySelector('#step-validate button.btn-primary');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<span class="loading-spinner"></span> Validando...';
+  btn.disabled = true;
+
+  try {
+    const url = `${WEB_APP_URL}?action=getLeader&apiKey=${encodeURIComponent(API_KEY)}&code=${encodeURIComponent(code)}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.ok && data.leader) {
+      const status = data.leader.status || 'collecting';
+      const currentCount = data.leader.evaluatorCount || 0;
+
+      if (status === 'closed') {
+        document.getElementById('closed-message').textContent =
+          'Esta avaliação foi encerrada pelo líder. Não aceita mais respostas. Que Deus o(a) abençoe pelo seu interesse!';
+        showStep('step-closed');
+        return;
+      }
+
+      if (currentCount >= MAX_EVALUATORS) {
+        document.getElementById('closed-message').textContent =
+          `Esta avaliação atingiu o limite máximo de ${MAX_EVALUATORS} avaliadores. Não aceita mais respostas.`;
+        showStep('step-closed');
+        return;
+      }
+
+      leaderCode = code;
+      leaderData = data.leader;
+      document.getElementById('leader-name-display').textContent = data.leader.name;
+      document.getElementById('leader-role-display').textContent = `${data.leader.position} | ${data.leader.company}`;
+
+      showStep('step-relation');
+    } else {
+      errorEl.textContent = data.error || 'Código não encontrado. Verifique e tente novamente.';
+      codeInput.classList.add('input-error');
+      codeInput.disabled = false;
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+  } catch (err) {
+    console.error(err);
+    errorEl.textContent = 'Erro de conexão. Verifique sua internet e tente novamente.';
+    codeInput.disabled = false;
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
+}
+
+function selectRelation(rel) {
+  selectedRelation = rel;
+  document.querySelectorAll('.relation-option').forEach(el => el.classList.remove('selected'));
+  document.querySelector(`.relation-option[data-relation="${rel}"]`).classList.add('selected');
+  updateStartButton();
+}
+
+function updateStartButton() {
+  const time = document.getElementById('time-knowing').value;
+  const btn = document.getElementById('btn-start-eval');
+  btn.disabled = !(selectedRelation && time);
+}
+
+function startEvaluation() {
+  current = 0;
+  showStep('step-quiz');
+  renderQuestion();
+}
+
+function showStep(stepId) {
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  document.getElementById(stepId).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderQuestion() {
+  if (window.innerWidth <= 480) window.scrollTo({ top: 0, behavior: 'smooth' });
+  const q = questions[current];
+  const comp = competencies.find(c => c.id === q.c);
+
+  document.getElementById("q-current").textContent = current + 1;
+  document.getElementById("question-pillar").textContent = `🏛️ Pilar: ${comp.pillar}`;
+  document.getElementById("question-competence").textContent = comp.name;
+  document.getElementById("question-competence").style.color = comp.color;
+  document.getElementById("question-text").textContent = q.t;
+  document.getElementById("question-verse").textContent = q.v ? `📖 ${q.v}` : '';
+
+  const optsContainer = document.getElementById("options");
+  optsContainer.innerHTML = "";
+  scaleOptions.forEach(opt => {
+    const btn = document.createElement("div");
+    btn.className = "opt" + (responses[current] === opt.num ? " selected" : "");
+    btn.innerHTML = `
+      <div class="opt-emoji">${opt.emoji}</div>
+      <div class="opt-num">${opt.num}</div>
+      <small>${opt.label}</small>
+      <div class="opt-desc">${opt.desc}</div>
+    `;
+    btn.onclick = () => selectOption(opt.num);
+    optsContainer.appendChild(btn);
+  });
+  updateProgress();
+  document.getElementById("btn-prev").disabled = current === 0;
+  document.getElementById("btn-next").textContent = current === TOTAL_Q - 1 ? "Concluir" : "Próxima";
+}
+
+function selectOption(value) {
+  responses[current] = value;
+  renderQuestion();
+  setTimeout(() => { if (current < TOTAL_Q - 1) goNext(); }, 280);
+}
+
+function goNext() {
+  if (responses[current] === null) { alert("Por favor, selecione uma resposta antes de prosseguir."); return; }
+  if (current < TOTAL_Q - 1) { current++; renderQuestion(); }
+  else { showStep("step-comments"); }
+}
+
+function goPrev() {
+  if (current > 0) { current--; renderQuestion(); }
+}
+
+function updateProgress() {
+  const answered = responses.filter(r => r !== null).length;
+  const pct = (answered / TOTAL_Q) * 100;
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("answered-count").textContent = answered;
+}
+
+// ════════════════════════════════════════════════════════════════
+// 📤 ENVIAR AVALIAÇÃO — VERSÃO CORRIGIDA
+// ════════════════════════════════════════════════════════════════
+async function enviarAvaliacao() {
+  const strengths    = document.getElementById("q-strengths").value.trim();
+  const improvements = document.getElementById("q-improvements").value.trim();
+  const impact       = document.getElementById("q-impact").value.trim();
+  const timeKnowing  = document.getElementById("time-knowing").value;
+
+  if (!strengths || !improvements || !impact) {
+    alert("Por favor, responda todas as 3 perguntas finais.");
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+
+  const anonId = 'EV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+  // ✅ Payload com TODOS os nomes que o backend espera
+  const payload = {
+    apiKey: API_KEY,
+    action: "submitEvaluation",
+    evaluation: {
+      leaderCode: leaderCode,        // ✅ DENTRO de evaluation
+      anonId: anonId,
+      relation: selectedRelation,
+      timeKnown: timeKnowing,        // ✅ Nome correto: timeKnown
+      responses: responses,
+      strengths: strengths,
+      improvements: improvements,
+      impact: impact
+    }
+  };
+
+  console.log('📤 Enviando payload:', payload);
+
+  try {
+    const result = await postToScript(payload);
+    console.log('✅ Resposta do servidor:', result);
+
+    showStep('step-success');
+    setTimeout(() => renderRadarChart(), 300);
+  } catch (err) {
+    console.error('❌ Erro ao enviar:', err);
+    document.getElementById('error-title').textContent = 'Erro ao Enviar';
+    document.getElementById('error-message').textContent = 'Não foi possível enviar sua avaliação: ' + (err.message || 'erro desconhecido') + '. Verifique sua conexão e tente novamente.';
+    showStep('step-error');
+    btn.disabled = false;
+    btn.innerHTML = 'Enviar Avaliação';
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// 🌐 POST PARA O APPS SCRIPT — VERSÃO QUE LÊ A RESPOSTA
+// ════════════════════════════════════════════════════════════════
+async function postToScript(payload) {
+  const body = JSON.stringify(payload);
+
+  const response = await fetch(WEB_APP_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: body,
+    redirect: "follow"
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+
+  if (!result.ok) {
+    throw new Error(result.error || 'Erro retornado pelo servidor');
+  }
+
+  return result;
+}
+
+// ════════════════════════════════════════════════════════════════
+// 📊 GRÁFICO RADAR — ESPELHO DE PERCEPÇÃO
+// ════════════════════════════════════════════════════════════════
+function renderRadarChart() {
+  const avgByCompetency = competencies.map(comp => {
+    const indicesOfCompetency = questions
+      .map((q, idx) => q.c === comp.id ? idx : -1)
+      .filter(idx => idx !== -1);
+
+    const validResponses = indicesOfCompetency
+      .map(idx => responses[idx])
+      .filter(r => r !== null);
+
+    if (validResponses.length === 0) return 0;
+    const sum = validResponses.reduce((acc, val) => acc + val, 0);
+    return parseFloat((sum / validResponses.length).toFixed(2));
+  });
+
+  const ctx = document.getElementById('radar-chart');
+  if (!ctx) return;
+
+  if (window._radarChartInstance) {
+    window._radarChartInstance.destroy();
+  }
+
+  const labels = competencies.map(c => c.name);
+  const colors = competencies.map(c => c.color);
+
+  window._radarChartInstance = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Sua percepção (1-5)',
+        data: avgByCompetency,
+        backgroundColor: 'rgba(11, 99, 206, 0.20)',
+        borderColor: '#0b63ce',
+        borderWidth: 2.5,
+        pointBackgroundColor: colors,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 9,
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: colors,
+        pointHoverBorderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            font: { family: 'Arial', size: 13, weight: '700' },
+            color: '#063b7a',
+            padding: 16,
+            boxWidth: 16
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(6, 59, 122, 0.95)',
+          padding: 12,
+          titleFont: { family: 'Arial', size: 13, weight: '900' },
+          bodyFont: { family: 'Arial', size: 13 },
+          callbacks: {
+            label: function(context) {
+              const value = context.parsed.r;
+              const levels = ['', '🌱 Iniciante', '🌿 Em Desenv.', '🌳 Consistente', '🌲 Maduro', '✨ Exemplar'];
+              const nivel = levels[Math.round(value)] || '—';
+              return ` ${value.toFixed(2)} — ${nivel}`;
+            }
+          }
+        }
+      },
+      scales: {
+        r: {
+          beginAtZero: true,
+          min: 0,
+          max: 5,
+          ticks: {
+            stepSize: 1,
+            font: { family: 'Arial', size: 11, weight: '700' },
+            color: '#94a3b8',
+            backdropColor: 'rgba(255,255,255,0.85)',
+            backdropPadding: 3
+          },
+          pointLabels: {
+            font: { family: 'Arial', size: 11, weight: '800' },
+            color: '#063b7a',
+            padding: 10
+          },
+          grid: { color: 'rgba(11, 99, 206, 0.12)' },
+          angleLines: { color: 'rgba(11, 99, 206, 0.18)' }
+        }
+      },
+      animation: {
+        duration: 1200,
+        easing: 'easeOutQuart'
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
